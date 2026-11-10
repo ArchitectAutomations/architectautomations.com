@@ -1,18 +1,21 @@
-/* Speed to Lead, direction A "Timetable" (Vignelli / Swiss).
-   One family, hierarchy by size. Ink, ground, one accent. Radius 0, no shadow, no motion.
-   Bar grammar: red bar = what the service does; black bar = its limits. */
+/* Architect Automations, X brand (2026-11-10).
+   Cream paper, warm ink, one serif (EB Garamond) with true small caps for labels.
+   Red #e2231a only as a thin ruled line, never as text or fill. No scripts, no motion. */
+/* Self-hosted fonts (SIL OFL 1.1, see fonts/LICENSE.txt). Latin subset; no third-party requests. */
+@font-face { font-family: "EB Garamond"; font-style: normal; font-weight: 400 800; font-display: swap; src: url("fonts/eb-garamond-latin.woff2") format("woff2"); }
+@font-face { font-family: "EB Garamond"; font-style: italic; font-weight: 400; font-display: swap; src: url("fonts/eb-garamond-italic-latin.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant SC"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/cormorant-sc-600-latin.woff2") format("woff2"); }
+
 :root {
-  --ground: #ffffff;
-  --ink: #000000;
-  --red: #e2231a;      /* the one accent: 4.7:1 with white; bars, the line, hover */
-  --grey: #6b6b6b;     /* secondary on white, 5.3:1 */
-  --grey-on-ink: #a0a0a0; /* secondary on black, 8:1 */
-  --rule: #d0d0d0;     /* hairlines only */
-  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  /* 8 px baseline ladder */
+  --paper: #f3eee2;
+  --ink: #2b2723;      /* 12.8:1 on paper (AAA) */
+  --soft: #5e5850;     /* secondary text, 6.1:1 on paper (AA) */
+  --rule: #cfc6b4;     /* hairlines only, decorative */
+  --red: #e2231a;      /* thin ruled accent only, 4.0:1 (non-text, >= 3:1) */
+  --serif: "EB Garamond", "Hoefler Text", Garamond, "Times New Roman", serif;
   --s1: 0.5rem; --s2: 1rem; --s3: 1.5rem; --s4: 2rem; --s6: 3rem; --s8: 4rem; --s12: 6rem;
-  /* content frame: 58rem of content, 16 px minimum gutter */
-  --gutter: max(1rem, calc((100% - 58rem) / 2));
+  --measure: 36rem;
+  --gutter: max(1rem, calc((100% - 46rem) / 2));
   color-scheme: light;
 }
 
@@ -21,279 +24,234 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  background: var(--ground);
+  background: var(--paper);
   color: var(--ink);
-  font: 400 1.0625rem/1.625rem var(--sans);
-  font-variant-numeric: tabular-nums;
+  font: 400 1.1875rem/1.6 var(--serif);
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+  font-variant-numeric: oldstyle-nums proportional-nums;
   overflow-wrap: break-word;
-  border-top: 0.5rem solid var(--red);
 }
 
 p, h1, h2, h3, ul, ol, dl, dd { margin: 0; }
-b { font-weight: 700; }
+b { font-weight: 600; }
 
-a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
-a:hover { color: var(--red); }
-a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.18em; text-decoration-color: var(--red); }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
-/* Masthead: the business name set in type is the mark */
-.masthead { padding: var(--s3) var(--gutter) 0; }
-.mark {
-  font-size: 0.9375rem;
-  line-height: 1.5rem;
-  font-weight: 700;
+/* Small caps, the one label style. Cormorant SC is drawn as small caps
+   (EB Garamond on Google Fonts has no smcp feature, so CSS would fake them). */
+.label, .head, .where, .word, .table dt, .trades li {
+  font-family: "Cormorant SC", var(--serif);
+  font-weight: 600;
+  font-variant-numeric: lining-nums;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
-.where { font-size: 0.8125rem; line-height: 1.25rem; color: var(--grey); }
 
-/* Hero */
-.hero { padding: var(--s6) var(--gutter) var(--s6); }
-.product { font-size: 1.0625rem; line-height: 1.5rem; font-weight: 500; margin-bottom: var(--s1); }
+/* Masthead: the outlined wordmark, a thin red rule under it */
+.masthead {
+  padding: var(--s4) var(--gutter) var(--s3);
+  border-bottom: 1px solid var(--red);
+}
+.wordmark { display: block; width: min(100%, 26rem); height: auto; }
+.where { margin-top: var(--s1); font-size: 1rem; color: var(--soft); }
+
+/* Stance: the bio, set large */
+.stance { padding: var(--s8) var(--gutter) var(--s6); }
 h1 {
-  max-width: 11em;
-  font-size: clamp(2.75rem, 1.6rem + 5vw, 4.5rem);
-  line-height: 1.04;
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  max-width: 14em;
+  font-size: clamp(2.25rem, 1.5rem + 3.6vw, 3.75rem);
+  line-height: 1.08;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
-.lede {
-  max-width: 34rem;
+.creed {
+  max-width: 30rem;
   margin-top: var(--s3);
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  line-height: 1.45;
+  font-style: italic;
   text-wrap: pretty;
 }
+
+/* The offer */
+.offer { padding: 0 var(--gutter) var(--s8); }
+.offer::before {               /* the ruled line: a short red hairline */
+  content: "";
+  display: block;
+  width: 4rem;
+  height: 2px;
+  margin-bottom: var(--s4);
+  background: var(--red);
+}
+.label { font-size: 1.3125rem; }
+.offer h2 {
+  margin-top: var(--s1);
+  max-width: 16em;
+  font-size: clamp(1.75rem, 1.35rem + 1.8vw, 2.5rem);
+  line-height: 1.15;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.lede { max-width: var(--measure); margin-top: var(--s2); text-wrap: pretty; }
 .cta { margin-top: var(--s4); }
 .send {
-  display: flex;
-  justify-content: space-between;
+  display: inline-flex;
   align-items: center;
   gap: var(--s2);
-  min-height: 3.5rem;
-  padding: var(--s2) var(--s3);
+  min-height: 3rem;
+  padding: 0.625rem var(--s3);
+  border: 1px solid var(--ink);
   background: var(--ink);
-  color: var(--ground);
-  font-weight: 700;
-  font-size: 1.0625rem;
-  line-height: 1.5rem;
+  color: var(--paper);
+  font-weight: 500;
   text-decoration: none;
 }
-.send:hover { background: var(--red); color: var(--ground); }
-.send:focus-visible { outline-color: var(--ink); }
-.arrow { font-size: 1.25rem; }
+.send:hover { background: transparent; color: var(--ink); }
 
-/* Proof: a full-width black panel, the sentence verbatim */
-.proof {
-  padding: var(--s6) var(--gutter);
-  background: var(--ink);
-  color: var(--ground);
+/* Parts: small-caps heading over a hairline */
+.part { padding: 0 var(--gutter) var(--s8); }
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s2);
+  margin-bottom: var(--s3);
+  font-size: 1.4375rem;
 }
-.proof h2 {
-  max-width: 36rem;
-  font-size: 0.9375rem;
-  line-height: 1.5rem;
-  font-weight: 500;
-  color: var(--grey-on-ink);
-}
-.stat {
-  max-width: 44rem;
-  margin-top: var(--s2);
-  font-size: clamp(1.375rem, 1rem + 1.6vw, 2.25rem);
-  line-height: 1.3;
-  text-wrap: pretty;
-}
-.hedge {
-  max-width: 36rem;
-  margin-top: var(--s3);
-  font-size: 0.9375rem;
-  line-height: 1.5rem;
-  color: var(--grey-on-ink);
-}
+.head::after { content: ""; flex: 1; height: 1px; background: var(--rule); transform: translateY(-0.3em); }
 
-/* Section bars carry the headings in white type */
-.bar {
-  padding: 0.75rem var(--gutter);
-  background: var(--red);
-  color: var(--ground);
-  font-size: 1.25rem;
-  line-height: 1.5rem;
-  font-weight: 700;
-}
-.bar.limit { background: var(--ink); }
-
-.body { padding: var(--s4) var(--gutter) var(--s8); }
-.body > p, .lead { max-width: 36rem; text-wrap: pretty; }
-
-/* The signature: How it works as a transit line, five stops */
-.line {
-  list-style: none;
-  padding: var(--s4) var(--gutter) var(--s8);
-}
+/* How it works: five stops on a thin red line */
+.line { list-style: none; padding: 0; max-width: var(--measure); counter-reset: stop; }
 .line li {
+  counter-increment: stop;
   position: relative;
-  max-width: 34rem;
-  padding: 0 0 var(--s4) 3rem;
+  padding: 0 0 var(--s3) 2.75rem;
   text-wrap: pretty;
 }
 .line li:last-child { padding-bottom: 0; }
-.line li::before {           /* the stop */
-  content: "";
+.line li::before {             /* the stop: a numbered ring */
+  content: counter(stop);
   position: absolute;
   z-index: 1;
   left: 0;
-  top: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 0.375rem solid var(--red);
+  top: 0.05rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--ink);
   border-radius: 50%;
-  background: var(--ground);
+  background: var(--paper);
+  font-size: 1rem;
+  line-height: 1.65rem;
+  text-align: center;
+  font-variant-numeric: lining-nums;
 }
-.line li::after {            /* the track to the next stop */
+.line li::after {              /* the track */
   content: "";
   position: absolute;
-  left: 0.5625rem;
-  top: 0;
+  left: calc(0.875rem - 0.5px);
+  top: 1.8rem;
   bottom: 0;
-  width: 0.375rem;
+  width: 1px;
   background: var(--red);
 }
-.line li:first-child::after { top: 0.75rem; }
 .line li:last-child::after { display: none; }
+.word { font-weight: 600; letter-spacing: 0.08em; }
 
-.word {
-  display: inline-block;
-  padding: 0 0.4em;
-  background: var(--ink);
-  color: var(--ground);
-  font-size: 0.875em;
-  letter-spacing: 0.04em;
-  line-height: 1.5;
-}
-
-/* Packages: oversized numeral, name, what the customer gets */
-.packages { list-style: none; padding: 0; counter-reset: pkg; }
+/* Packages */
+.packages { list-style: none; padding: 0; counter-reset: pkg; max-width: 40rem; }
 .packages li {
   counter-increment: pkg;
   display: grid;
-  grid-template-columns: 3rem 1fr;
+  grid-template-columns: 2.5rem 1fr;
   column-gap: var(--s2);
   padding: var(--s3) 0;
   border-top: 1px solid var(--rule);
 }
 .packages li:first-child { border-top: 0; padding-top: 0; }
 .packages li::before {
-  content: counter(pkg);
+  content: counter(pkg, upper-roman);
   grid-row: 1 / span 2;
-  font-size: 3rem;
-  line-height: 3rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-size: 1.5rem;
+  line-height: 1.6rem;
+  font-weight: 500;
+  color: var(--soft);
 }
-.packages h3 { font-size: 1.25rem; line-height: 1.5rem; font-weight: 700; padding-top: 0.25rem; }
-.packages p { margin-top: var(--s1); max-width: 30rem; }
-.note { margin-top: var(--s3); color: var(--grey); }
+.packages h3 { font-size: 1.375rem; line-height: 1.6rem; font-weight: 600; }
+.packages p { margin-top: var(--s1); max-width: 32rem; }
+.note { max-width: var(--measure); margin-top: var(--s3); font-size: 1.0625rem; color: var(--soft); }
 
-/* Who it is for: the trades as a destination board */
+/* Who it is for */
+.lead { max-width: var(--measure); text-wrap: pretty; }
 .trades {
   list-style: none;
   padding: 0;
-  margin-top: var(--s3);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: var(--s2);
-  max-width: 36rem;
-  font-weight: 700;
+  column-gap: var(--s3);
+  max-width: var(--measure);
+  font-size: 1.125rem;
 }
-.trades li { padding: 0.75rem 0; border-top: 1px solid var(--ink); }
+.trades li { padding: 0.5rem 0; border-top: 1px solid var(--rule); }
 
 /* Plain rows with hairlines */
-.rows { list-style: none; padding: 0; max-width: 36rem; }
-.rows li { padding: 0.75rem 0; border-top: 1px solid var(--rule); }
-.rows li:first-child { border-top: 1px solid var(--ink); }
+.rows { list-style: none; padding: 0; max-width: var(--measure); }
+.rows li { padding: 0.625rem 0; border-top: 1px solid var(--rule); }
+.rows li:last-child { border-bottom: 1px solid var(--rule); }
+.lead + .rows { margin-top: var(--s3); }
 
-/* Timeline: a timetable */
-.table { max-width: 36rem; }
+/* Timeline */
+.table { max-width: var(--measure); }
 .table div {
   display: grid;
-  grid-template-columns: 6rem 1fr;
+  grid-template-columns: 7.75rem 1fr;
   column-gap: var(--s2);
-  padding: 0.75rem 0;
+  padding: 0.625rem 0;
   border-top: 1px solid var(--rule);
 }
-.table div:first-child { border-top: 1px solid var(--ink); }
-.table dt { font-weight: 700; }
+.table div:last-child { border-bottom: 1px solid var(--rule); }
+.table dt { font-weight: 600; }
 
-/* Never promise */
-.never {
-  font-size: 1.375rem;
-  line-height: 1.875rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
+/* About: the brand statement */
+.statement { max-width: 34rem; }
+.statement p + p { margin-top: var(--s2); }
+.opening { font-size: 1.375rem; line-height: 1.45; font-weight: 500; }
+.closing { font-style: italic; }
+.seal { display: block; width: 4.5rem; height: auto; margin-top: var(--s4); }
 
 /* Contact */
 .address {
-  margin-top: var(--s2);
-  font-size: clamp(1.375rem, 0.75rem + 3.2vw, 3rem);
-  line-height: 1.15;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  margin-top: var(--s1);
+  font-size: clamp(1.5rem, 0.9rem + 3vw, 2.5rem);
+  line-height: 1.2;
+  font-weight: 500;
   overflow-wrap: anywhere;
 }
 
 /* Footer */
 .site-footer {
   padding: var(--s4) var(--gutter) var(--s6);
-  border-top: 1px solid var(--ink);
-  font-size: 0.8125rem;
-  line-height: 1.25rem;
-  color: var(--grey);
+  border-top: 1px solid var(--red);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--soft);
   overflow-wrap: anywhere;
 }
+.site-footer p:first-child { color: var(--ink); }
 .site-footer p + p { margin-top: var(--s2); }
 
 /* Laptop and up */
 @media (min-width: 48rem) {
-  .hero { padding-top: var(--s12); padding-bottom: var(--s12); }
-  .send { display: inline-flex; min-width: 22rem; }
-  .proof { padding-top: var(--s8); padding-bottom: var(--s8); }
-  .bar { font-size: 1.5rem; line-height: 2rem; padding-top: var(--s2); padding-bottom: var(--s2); }
-
-  /* the line runs left to right across five columns */
-  .line {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    column-gap: var(--s3);
-    padding-top: var(--s6);
-  }
-  .line li { padding: 3rem 0 0; }
-  .line li::after {
-    left: 0;
-    right: calc(-1 * var(--s3));
-    top: 0.5625rem;
-    bottom: auto;
-    width: auto;
-    height: 0.375rem;
-  }
-  .line li:first-child::after { top: 0.5625rem; left: 0.75rem; }
-  .line li:last-child::after { display: none; }
-
-  .packages li { grid-template-columns: 5rem 14rem 1fr; padding: var(--s4) 0; }
-  .packages li::before { grid-row: 1; font-size: 4.5rem; line-height: 4rem; }
-  .packages p { margin-top: 0; padding-top: 0.25rem; }
+  .stance { padding-top: var(--s12); padding-bottom: var(--s8); }
+  .packages li { grid-template-columns: 3.5rem 12rem 1fr; padding: var(--s4) 0; }
+  .packages li::before { grid-row: 1; }
+  .packages p { margin-top: 0; }
   .packages li:first-child { padding-top: 0; }
-
-  .trades { grid-template-columns: repeat(3, 1fr); max-width: 44rem; }
-  .never { font-size: 2rem; line-height: 2.5rem; max-width: 40rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  .trades { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media print {
-  body { border-top: 0; }
-  .bar, .bar.limit, .proof, .send, .word { background: none; color: #000; }
-  .bar { border-top: 3px solid #000; }
-  .proof h2, .hedge { color: #333; }
+  body { background: #fff; }
+  .send { background: none; color: #000; }
 }

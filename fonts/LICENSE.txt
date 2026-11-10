@@ -1,0 +1,9 @@
+Web fonts used by architectautomations.com (Latin subsets, downloaded from Google Fonts 2026-11-10).
+
+eb-garamond-latin.woff2, eb-garamond-italic-latin.woff2
+  EB Garamond, Copyright 2017 The EB Garamond Project Authors (https://github.com/octaviopardo/EBGaramond12)
+
+cormorant-sc-600-latin.woff2
+  Cormorant SC, Copyright 2015 The Cormorant Project Authors (https://github.com/CatharsisFonts/Cormorant)
+
+Both are licensed under the SIL Open Font License, Version 1.1: https://openfontlicense.org
